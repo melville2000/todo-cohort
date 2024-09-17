@@ -2,13 +2,14 @@ const express = require("express");
 const dotenv = require('dotenv').config
 const { createTodo } = require("./types");
 const { todo } = require("./db");
-
+const cors = require("cors")
+const port = process.env.PORT
 
 const app = express();
 
 app.use(express.json())
+app.use(cors({}))
 
-const port = process.env.PORT
 
 app.post("/todo", async function (req, res) {
     const createPayload = req.body;
@@ -30,7 +31,7 @@ app.post("/todo", async function (req, res) {
 })
 
 app.get("/todos", async function (req, res) {
-    const todos = await todos.find()
+    const todos = await todo.find()
     res.json({
         todos
     })
