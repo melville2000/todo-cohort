@@ -14,8 +14,8 @@ function App() {
         const json = await res.json();
         setTodos(json.todos)
       })
-    },10000)
-  })
+    },1000)
+  },[])
 
 
   return (

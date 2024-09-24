@@ -10,28 +10,28 @@ const app = express();
 app.use(express.json())
 app.use(cors({}))
 
-let counter = 0
 
-app.post("/todo", async function (req, res) {
-    const todoId = counter++
-    const createPayload = req.body;
-    const parsedPayload = createTodo.safeParse(createPayload)
-    if (!parsedPayload.success) {
-        res.status(401).json({
-            msg: 'you sent the wrong inputs'
+    app.post("/todo", async function (req, res) {
+        const todoList = await todo.find()
+        const todoId = todoList.length+1
+        const createPayload = req.body;
+        const parsedPayload = createTodo.safeParse(createPayload)
+        if (!parsedPayload.success) {
+            res.status(401).json({
+                msg: 'you sent the wrong inputs'
+            })
+        }
+        await todo.create({
+            id: todoId,
+            title: createPayload.title,
+            description: createPayload.description,
+            completed: false
         })
-    }
-    await todo.create({
-        id: todoId,
-        title: createPayload.title,
-        description: createPayload.description,
-        completed: false
-    })
 
-    res.json({
-        msg: "todo Created"
+        res.json({
+            msg: "todo Created"
+        })
     })
-})
 
 app.get("/todos", async function (req, res) {
     const todos = await todo.find()
