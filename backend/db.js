@@ -6,6 +6,7 @@ const mongoURI = process.env.MONGOURI
 mongoose.connect(mongoURI)
 
 const todoSchema = mongoose.Schema({
+    id: Number,
     title: String,
     description: String,
     completed: Boolean

@@ -10,8 +10,10 @@ const app = express();
 app.use(express.json())
 app.use(cors({}))
 
+let counter = 0
 
 app.post("/todo", async function (req, res) {
+    const todoId = counter++
     const createPayload = req.body;
     const parsedPayload = createTodo.safeParse(createPayload)
     if (!parsedPayload.success) {
@@ -20,6 +22,7 @@ app.post("/todo", async function (req, res) {
         })
     }
     await todo.create({
+        id: todoId,
         title: createPayload.title,
         description: createPayload.description,
         completed: false
