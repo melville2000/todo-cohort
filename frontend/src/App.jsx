@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { CreateTodo } from '../components/CreateTodo'
 import { Todos } from '../components/Todos'
+import { CardWrapper } from '../components/CardWrapper'
 
 function App() {
   const [todos, setTodos] = useState([])
@@ -14,14 +15,17 @@ function App() {
         const json = await res.json();
         setTodos(json.todos)
       })
-    },1000)
+    },10000)
   },[])
 
 
   return (
     <div>
-      <CreateTodo></CreateTodo>
-      {todos.map(todos => <Todos key={todos.id} todos={todos}></Todos>)}
+        <h1>Todo App (MERN stack)</h1>
+        
+      <CardWrapper><h2>Add a Todo</h2><CreateTodo></CreateTodo></CardWrapper>
+      <h2>List of Todos</h2>
+      {todos.map(todos => <CardWrapper><Todos key={todos.id} todos={todos}></Todos></CardWrapper>)}
     </div>
   )
 }
