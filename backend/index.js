@@ -3,7 +3,11 @@ const dotenv = require('dotenv').config
 const { createTodo, updateTodo } = require("./types");
 const { todo } = require("./db");
 const cors = require("cors")
+const mongoose = require('mongoose')
+
 const port = process.env.PORT
+const mongoURI = process.env.MONGOURI
+
 
 const app = express();
 
@@ -85,6 +89,19 @@ app.post("/delete", async (req, res) => {
     res.json({ message: "Todo Dosent exits" })
 })
 
-app.listen(port, function () {
-    console.log(`App running on port ${port}`)
-})
+
+
+function main() {
+    try {
+        mongoose.connect(mongoURI)
+        console.log("Connected to database")
+    } catch (error) {
+        console.log(error)
+    }
+
+    app.listen(port, function () {
+        console.log(`App running on port ${port}`)
+    })
+}
+
+main()
